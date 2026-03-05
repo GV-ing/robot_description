@@ -1,0 +1,25 @@
+# Build artifacts
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ROS2
+*.log
+
+# Docker
+docker_scripts/tmp_sources/
+
+# OS
+.DS_Store
