@@ -30,7 +30,7 @@ RUN mkdir -p /root/ros2_ws/src
 COPY tmp_sources/ /root/ros2_ws/src/
 WORKDIR /root/ros2_ws
 
-# Install dependencies explicitly
+# Install ROS2 dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	ros-humble-geometry-msgs \
 	ros-humble-std-msgs \
@@ -47,10 +47,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	ros-humble-ros-gz-bridge \
 	&& rm -rf /var/lib/apt/lists/*
 
-# fa il build del workspace ROS2
+# Build the ROS2 workspace
 RUN /bin/bash -lc "source /opt/ros/${ROS_DISTRO}/setup.bash && colcon build --symlink-install"
 
-# crea uno script che configura l'ambiente ROS2 e poi esegue il comando passato come argomento
+# Create a script that configures the ROS2 environment and executes the command passed as argument
+# Required to run colcon build directly inside the container
 RUN echo '#!/bin/bash' > /entrypoint.sh && \
 	echo 'source /opt/ros/humble/setup.bash' >> /entrypoint.sh && \
 	echo 'source /root/ros2_ws/install/local_setup.bash' >> /entrypoint.sh && \
@@ -58,7 +59,7 @@ RUN echo '#!/bin/bash' > /entrypoint.sh && \
 	echo 'exec "$@"' >> /entrypoint.sh && \
 	chmod +x /entrypoint.sh
 
-# Configura l'ambiente ROS2
+# Configure the ROS2 environment
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc \
 	&& echo "source /root/ros2_ws/install/local_setup.bash" >> /root/.bashrc \
 	&& echo "source /usr/share/colcon_cd/function/colcon_cd.sh" >> /root/.bashrc \

@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 
 
-# copy the source in temporary folder
+# Start the Docker image build
 rm -rf ./tmp_sources
 mkdir -p ./tmp_sources
 cp -r ../src/* ./tmp_sources
@@ -11,4 +11,4 @@ docker build -t robot_description -f ./Dockerfile .
 
 rm -rf ./tmp_sources
 
-echo "Build completato. Avvia il container con: ./docker_run_container.sh"
+echo "Build completed. Start the container with: ./docker_run_container.sh"

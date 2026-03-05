@@ -5,7 +5,7 @@ IMAGE_NAME="robot_description"
 IMAGE_ID=$(docker images -q "$IMAGE_NAME")
 CNT_NAME="robot_description_cnt"
 
-# Start X access for container
+# Start the container with options required to run ROS2 and Gazebo with GUI
 xhost +local:root
 docker run --rm -it --net=host \
 	--env="DISPLAY=$DISPLAY" \
